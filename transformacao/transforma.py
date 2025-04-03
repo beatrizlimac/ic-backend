@@ -5,7 +5,7 @@ import zipfile
 
 # define os diretórios
 projeto_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-anexos_dir = os.path.join(projeto_dir, "ic-backend/web_scraping", "anexos_ans")
+anexos_dir = os.path.join(projeto_dir, "web_scraping", "anexos_ans")
 transformacao_dir = os.path.join(projeto_dir, "transformacao")
 
 # localiza o arquivo PDF Anexo I

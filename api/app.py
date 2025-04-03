@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
+from flask_cors import CORS  # importe o CORS
 
 app = Flask(__name__)
+CORS(app)  # habilite o CORS para todas as rotas
 
 # configurações do banco de dados
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@mysql:3306/ans_data'
@@ -38,11 +40,10 @@ class OperadoraAtiva(db.Model):
 @app.route('/')
 # Rota inicial
 def home():
-    
     termo = request.args.get('q', '').strip()
     if not termo:
         return jsonify({"error": "Parâmetro 'q' é obrigatório"}), 400
-  
+
     resultados = OperadoraAtiva.query.filter(
         or_(
             OperadoraAtiva.registro_ans.ilike(f'%{termo}%'),
@@ -64,7 +65,6 @@ def home():
             OperadoraAtiva.representante.ilike(f'%{termo}%'),
             OperadoraAtiva.cargo_representante.ilike(f'%{termo}%'),
             OperadoraAtiva.regiao_da_comercializacao.ilike(f'%{termo}%'),
-            
         )
     ).all()
 
@@ -90,7 +90,6 @@ def home():
             "representante": op.representante,
             "cargo_representante": op.cargo_representante,
             "regiao_da_comercializacao": op.regiao_da_comercializacao,
-            "data_registro_ans": op.data_registro_ans.strftime('%Y-%m-%d') if op.data_registro_ans else None
         })
 
     return jsonify(output)
