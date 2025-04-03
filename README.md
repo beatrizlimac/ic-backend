@@ -1,2 +1,0 @@
-# IntuitiveCare
-Testes de Nivelamento
